@@ -18,7 +18,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      i: 10
+      i: 10,
+      hasError: false
+    }
+  }
+  static getDerivedStateFromError() {
+    return {
+      hasError: true
     }
   }
   componentDidMount() {
@@ -33,13 +39,30 @@ class App extends React.Component {
     }
   }
   render() {
+    console.log(this.state.hasError);
+    if (this.state.hasError) {
+      return (
+        <h1> Error Occured Shubham! </h1>
+      )
+    }
     return (
       <>
-        <h1> Main Componenet</h1>
-        <Counter i={this.state.i} />
+        <DisplayMainComponenet i={this.state.i}/>
       </>
     )
   }
+}
+
+function DisplayMainComponenet(props) {
+  const {i} = props;
+  console.log(i);
+  if (i > 20) {
+    throw new Error("Error Thrown Shubham")
+  }
+  
+  return (
+    <h1> Main Componenet</h1>
+  );
 }
 
 export default App;
