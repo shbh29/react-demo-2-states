@@ -2,33 +2,39 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 
-let count = 0;
-
-
 class Counter extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      count: 10
-    }
+  shouldComponentUpdate() {
+    console.log(this.props.i);
+    return true;
   }
   render() {
-    const {count}  = this.state;
     return (
-      <div className='App'>
-        <h1> {count} </h1>
-        <button onClick={() => {
-          this.setState({count: count + 1});
-        }}>Increment</button>
-        <button onClick={() => {
-          this.setState({ count: count - 1});
-        }}>
-          Decrement
-        </button>
-      </div>
+      <h2> Sub Component Render Counter: {this.props.i}</h2>
     );
   }
 }
 
-export default Counter;
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      i: 10
+    }
+  }
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({i: this.state.i + 1});
+    }, 2000);
+  }
+  render() {
+    return (
+      <>
+        <h1> Main Componenet</h1>
+        <Counter i={this.state.i} />
+      </>
+    )
+  }
+}
+
+export default App;
