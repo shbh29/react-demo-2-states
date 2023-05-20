@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 
@@ -23,9 +22,15 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    setInterval(() => {
+    this.timerId = setInterval(() => {
       this.setState({i: this.state.i + 1});
     }, 2000);
+  }
+  componentWillUnmount() {
+    console.log(` called will unmput ${this.timerId}`);
+    if (this.timerId) {
+      clearInterval(this.timerId);
+    }
   }
   render() {
     return (
